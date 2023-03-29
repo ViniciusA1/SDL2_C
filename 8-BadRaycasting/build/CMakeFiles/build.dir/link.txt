@@ -1,0 +1,1 @@
+/sbin/cc  -lSDL2 -lm -O3 -rdynamic CMakeFiles/build.dir/src/events.c.o CMakeFiles/build.dir/src/game.c.o CMakeFiles/build.dir/src/map.c.o CMakeFiles/build.dir/src/player.c.o CMakeFiles/build.dir/src/rays.c.o CMakeFiles/build.dir/src/window.c.o -o build 

@@ -1,0 +1,3 @@
+/home/vinicius/Documentos/study/OpenGL/SDL2C/6-KeyboardStates/build/CMakeFiles/build.dir
+/home/vinicius/Documentos/study/OpenGL/SDL2C/6-KeyboardStates/build/CMakeFiles/edit_cache.dir
+/home/vinicius/Documentos/study/OpenGL/SDL2C/6-KeyboardStates/build/CMakeFiles/rebuild_cache.dir

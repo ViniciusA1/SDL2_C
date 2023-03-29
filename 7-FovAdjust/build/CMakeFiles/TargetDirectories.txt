@@ -1,0 +1,3 @@
+/home/vinicius/Documentos/study/OpenGL/SDL2C/7-FovAdjust/build/CMakeFiles/build.dir
+/home/vinicius/Documentos/study/OpenGL/SDL2C/7-FovAdjust/build/CMakeFiles/edit_cache.dir
+/home/vinicius/Documentos/study/OpenGL/SDL2C/7-FovAdjust/build/CMakeFiles/rebuild_cache.dir

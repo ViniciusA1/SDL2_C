@@ -2,15 +2,16 @@
 #define STEP 0.1
 #define FOG 100
 
+// Render the rays to build the scenery.
 void renderRays(Game *game)
 {
         bool gotHit = false;
 
-        SDL_SetRenderDrawColor(game->window.render_ptr, 0, 255, 0, 255);
+        SDL_SetRenderDrawColor(game->window.render_ptr, 255, 0, 0, 255);
 
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < SCREENWIDTH; i++) {
                 float rayAngle = (game->player.angle - game->player.FOV / 2.0) 
-                       + ((float) i / (float) 100) * game->player.FOV;
+                       + ((float) i / (float) SCREENWIDTH) * game->player.FOV;
                
                 double cosRay = cos(rayAngle);
                 double sinRay = sin(rayAngle);

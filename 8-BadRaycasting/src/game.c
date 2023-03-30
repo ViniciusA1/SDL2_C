@@ -19,8 +19,8 @@ void initGame(Game *game)
 {
         SDL_Init(SDL_INIT_VIDEO);
         game->window.window_ptr = SDL_CreateWindow("Application", 
-                                  SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-                                  SCREENWIDTH, SCREENHEIGHT, 0);
+                        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+                        SCREENWIDTH, SCREENHEIGHT, 0);
 
         game->window.render_ptr = SDL_CreateRenderer(game->window.window_ptr, -1, 
                                                     SDL_RENDERER_PRESENTVSYNC);

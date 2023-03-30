@@ -4,7 +4,7 @@
 // Function render the player model and the direction line on screen.
 void renderPlayer(Window *window, Player *player)
 {
-        SDL_SetRenderDrawColor(window->render_ptr, 255, 0, 0, 255);
+        SDL_SetRenderDrawColor(window->render_ptr, 0, 255, 0, 255);
         SDL_RenderDrawPoint(window->render_ptr, player->pos_x, player->pos_y);
         SDL_SetRenderDrawColor(window->render_ptr, 0, 0, 0, 255);
 }
@@ -17,10 +17,10 @@ void movePlayer(Game *game, short int signal)
         double prev_y = game->player.pos_y;
 
         game->player.pos_x += signal * cos(game->player.angle) * 
-        (game->player.walk_speed * game->window.refresh_time);
+        game->player.walk_speed * game->window.refresh_time;
 
         game->player.pos_y += signal * sin(game->player.angle) * 
-        (game->player.walk_speed * game->window.refresh_time);
+        game->player.walk_speed * game->window.refresh_time;
         
         if(checkColision(game->player.pos_x, game->player.pos_y, &game->scene)) {
                 game->player.pos_x = prev_x;
@@ -28,6 +28,7 @@ void movePlayer(Game *game, short int signal)
         }
 }
 
+// Checks if the given x and y coordinates are on a map wall.
 bool checkColision(double x, double y, Map *scene)
 {
         if(x < 0 || y < 0 || x > SCREENWIDTH || y > SCREENHEIGHT || 

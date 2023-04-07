@@ -24,7 +24,7 @@ void initGame(Game *game)
                         SCREENWIDTH, SCREENHEIGHT, 0);
 
         game->window.render_ptr = SDL_CreateRenderer(game->window.window_ptr, -1, 
-                                                    SDL_RENDERER_ACCELERATED);
+                                                    SDL_RENDERER_PRESENTVSYNC);
        
         SDL_RenderSetLogicalSize(game->window.render_ptr, SCREENWIDTH, SCREENHEIGHT);
         
@@ -66,8 +66,7 @@ void gameLoop(Game *game)
                 return;
 
         game->player.walk_speed *= (1000.0 / 
-                                   (game->scene.column_amnt * 
-                                    game->scene.line_amnt));
+                        (game->scene.map_size * game->scene.map_size));
         
         while(running) {
 
@@ -85,6 +84,8 @@ void gameLoop(Game *game)
 
                 const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
                 verifyKeyboardState(keyboardstate, game);
+                //renderMap(&game->window, &game->scene);
+                //renderGrid(&game->window, &game->scene);
                 renderRays(game);
                 updateWindow(&game->window);
         }

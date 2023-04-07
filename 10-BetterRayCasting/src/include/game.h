@@ -21,8 +21,8 @@ typedef struct {
 
 typedef struct {
         Uint8 **map;
-        int column_amnt, line_amnt;
-        int block_wid, block_heig;
+        int map_size;
+        int block_size;
 } Map;
 
 typedef struct {
@@ -56,7 +56,6 @@ bool checkColision(double, double, Map *);
 // map.c
 
 int allocateMap(char *, Map *);
-void getMapSize(FILE *, int *, int *);
 void renderMap(Window *, Map *);
 void renderGrid(Window *, Map *);
 void deallocateMap(Map *);
@@ -64,3 +63,4 @@ void deallocateMap(Map *);
 // rays.c
 
 void renderRays(Game *);
+double findRayDistance(Game *, double, int *);

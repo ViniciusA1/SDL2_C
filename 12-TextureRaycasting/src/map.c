@@ -3,10 +3,10 @@
 
 // Function receives map name and allocate the necessary
 // memory for the map.
-int allocateMap(char *mapnumber, Map *scene)
+int allocateMap(char *mapname, Map *scene)
 {
-        char filename[10];
-        sprintf(filename, "%s%s", PATH, mapnumber);
+        char filename[30];
+        sprintf(filename, "%s%s", PATH, mapname);
         FILE *mapfile = fopen(filename, "rb");
 
         if(!mapfile) {
@@ -51,13 +51,14 @@ void renderMap(Window *window, Map *scene)
 
         for(int i = 0, j; i < scene->map_size; i++) {
                 for(j = 0; j < scene->map_size; j++) {
-                        if(scene->map[i][j]) {
-                                rect.x = j * (scene->block_size);
-                                rect.y = i * (scene->block_size);
-                                rect.w = scene->block_size;
-                                rect.h = scene->block_size;
-                                SDL_RenderFillRect(window->render_ptr, &rect);
-                        }
+                        if(!scene->map[i][j])
+                                continue;
+
+                        rect.x = j * (scene->block_size);
+                        rect.y = i * (scene->block_size);
+                        rect.w = scene->block_size;
+                        rect.h = scene->block_size;
+                        SDL_RenderFillRect(window->render_ptr, &rect);
                 }
         }
 

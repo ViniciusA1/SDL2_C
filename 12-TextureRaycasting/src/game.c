@@ -1,4 +1,6 @@
 #include "include/game.h"
+#include <SDL2/SDL_mouse.h>
+#include <SDL2/SDL_render.h>
 
 // Main function (initialize and quit SDL).
 int main (int argc, char *argv[])
@@ -14,7 +16,7 @@ int main (int argc, char *argv[])
 
 // Function receives the screen width and height.
 // Initializes the main window and renderer.
-void initGame(Game *game)
+static void initGame(Game *game)
 {
         SDL_Init(SDL_INIT_VIDEO);
         game->window.window_ptr = SDL_CreateWindow("Application", 
@@ -30,22 +32,22 @@ void initGame(Game *game)
                 fprintf(stderr, "ERROR! %s", SDL_GetError());
 
         SDL_SetRelativeMouseMode(SDL_TRUE);
-
         gameConfigs(game);
 }
 
 // Function receives the game object.
 // Set the basic game configs for player and window.
-void gameConfigs(Game *game)
+static void gameConfigs(Game *game)
 {
         // Set initial player position.
 
-        game->player.pos_x = SCREENWIDTH  / 2.0;
-        game->player.pos_y = SCREENHEIGHT / 2.0;
+        game->player.hitbox.x = SCREENWIDTH  / 2.0;
+        game->player.hitbox.y = SCREENHEIGHT / 2.0;
+        game->player.hitbox.h = game->player.hitbox.w = 10;
         
         // Set player walk, rotation speed and FOV.
 
-        game->player.walk_speed = 15;
+        game->player.walk_speed = 100;
         game->player.turn_speed = (10 * ONEDEGREE);
         game->player.FOV = 60 * ONEDEGREE;
 
@@ -56,17 +58,19 @@ void gameConfigs(Game *game)
 
 // Function holds the main game loop which keeps running
 // the game until the user wants to stop.
-void gameLoop(Game *game)
+static void gameLoop(Game *game)
 {
         SDL_Event game_event;
         bool running = true;
         Uint64 prev_time = 0, newest_time;
 
-        if(allocateMap("1", &game->scene))
+        if(allocateMap("second", &game->scene))
                 return;
 
         game->player.walk_speed *= (1000.0 / 
                         (game->scene.map_size * game->scene.map_size));
+
+        game->player.hitbox.w = game->player.hitbox.h = game->scene.block_size;
         
         while(running) {
 
@@ -77,19 +81,18 @@ void gameLoop(Game *game)
                 game->window.refresh_time = (newest_time - prev_time) / 1000.0;
                 prev_time = newest_time;
 
-                if(game->window.refresh_time > 0)
-                        printf("FPS: %lf\n", 1 / game->window.refresh_time);
+                //if(game->window.refresh_time > 0)
+                        //printf("FPS: %lf\n", 1 / game->window.refresh_time);
 
                 const Uint8 *keyboardstate = SDL_GetKeyboardState(NULL);
                 verifyKeyboardState(keyboardstate, game);
 
-                int relX, relY;
-                SDL_GetRelativeMouseState(&relX, &relY);
-                              game->player.angle += relX * game->player.turn_speed * 
-                              game->window.refresh_time;
-                //renderMap(&game->window, &game->scene);
-                //renderGrid(&game->window, &game->scene);
-                renderRays(game);
+                printf("%lf\n", game->player.angle);
+
+                renderMap(&game->window, &game->scene);
+                renderGrid(&game->window, &game->scene);
+                renderPlayer(&game->window, &game->player);
+                //renderRays(game);
                 updateWindow(&game->window);
         }
 
@@ -97,7 +100,7 @@ void gameLoop(Game *game)
 }
 
 // Destroy the main window, renderer and quit SDL (free allocated memory).
-void endGame(Game *game)
+static void endGame(Game *game)
 {
         SDL_DestroyRenderer(game->window.render_ptr);
         SDL_DestroyWindow(game->window.window_ptr);

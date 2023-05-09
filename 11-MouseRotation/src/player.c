@@ -11,15 +11,15 @@ void renderPlayer(Window *window, Player *player)
 
 // Function receives the direction signal ("+": up, "-": down) and updates
 // the player XY position on screen.
-void movePlayer(Game *game, short int signal)
+void movePlayer(Game *game, double dx, double dy, short int signal)
 {
         double prev_x = game->player.pos_x;
         double prev_y = game->player.pos_y;
 
-        game->player.pos_x += signal * cos(game->player.angle) * 
+        game->player.pos_x += signal * cos(game->player.angle + dx) * 
         game->player.walk_speed * game->window.refresh_time;
 
-        game->player.pos_y += signal * sin(game->player.angle) * 
+        game->player.pos_y += signal * sin(game->player.angle + dy) * 
         game->player.walk_speed * game->window.refresh_time;
         
         if(checkColision(game->player.pos_x, game->player.pos_y, &game->scene)) {

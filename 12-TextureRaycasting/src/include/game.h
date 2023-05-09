@@ -2,8 +2,8 @@
 #include <stdbool.h>
 #include <math.h>
 #define ONEDEGREE M_PI / 180
-#define SCREENWIDTH 700
-#define SCREENHEIGHT 700
+#define SCREENWIDTH 600
+#define SCREENHEIGHT 600
 
 typedef struct {
         SDL_Window *window_ptr;
@@ -12,11 +12,12 @@ typedef struct {
 } Window;
 
 typedef struct {
-        double pos_x, pos_y;
+        SDL_Rect hitbox;
         double walk_speed;
         double turn_speed;
         double angle;
         double FOV;
+        short int shakeDirection;
 } Player;
 
 typedef struct {
@@ -34,10 +35,10 @@ typedef struct {
 
 // game.c
 
-void initGame(Game *);
-void gameConfigs(Game *);
-void gameLoop(Game *);
-void endGame(Game *);
+static void initGame(Game *);
+static void gameConfigs(Game *);
+static void gameLoop(Game *);
+static void endGame(Game *);
 
 // events.c
 
@@ -64,4 +65,4 @@ void deallocateMap(Map *);
 // rays.c
 
 void renderRays(Game *);
-double findRayDistance(Game *, double, int *);
+static inline double findRayDistance(Game *, double, int *);

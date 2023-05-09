@@ -2,8 +2,8 @@
 #include <stdbool.h>
 #include <math.h>
 #define ONEDEGREE M_PI / 180
-#define SCREENWIDTH 600
-#define SCREENHEIGHT 600
+#define SCREENWIDTH 300
+#define SCREENHEIGHT 300
 
 typedef struct {
         SDL_Window *window_ptr;
